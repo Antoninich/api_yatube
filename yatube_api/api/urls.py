@@ -6,17 +6,17 @@ from .views import CommentViewSet, GroupViewSet, PostViewSet
 
 app_name = 'api'
 
-router = routers.DefaultRouter()
-router.register(r'api/v1/posts', PostViewSet, basename='posts')
-router.register(
-    r'api/v1/posts/(?P<post_pk>[0-9]+)/comments',
+router_v1 = routers.DefaultRouter()
+router_v1.register(r'posts', PostViewSet, basename='posts')
+router_v1.register(
+    r'posts/(?P<post_pk>\d+)/comments',
     CommentViewSet,
     basename='comments'
 )
-router.register(r'api/v1/groups', GroupViewSet, basename='groups')
+router_v1.register(r'groups', GroupViewSet, basename='groups')
 
 urlpatterns = [
-    path('api/v1/api-token-auth/', views.obtain_auth_token),
-    path('', include(router.urls)),
+    path('v1/api-token-auth/', views.obtain_auth_token),
+    path('v1/', include(router_v1.urls)),
 
 ]
